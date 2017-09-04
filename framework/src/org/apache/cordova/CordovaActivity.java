@@ -144,6 +144,9 @@ public class CordovaActivity extends Activity {
 
     protected void init() {
         appView = makeWebView();
+
+        unregisterForContextMenu(appView.getView());
+
         createViews();
         if (!appView.isInitialized()) {
             appView.init(cordovaInterface, pluginEntries, preferences);
