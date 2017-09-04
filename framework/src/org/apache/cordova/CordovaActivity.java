@@ -110,7 +110,7 @@ public class CordovaActivity extends Activity {
 
         String logLevel = preferences.getString("loglevel", "ERROR");
         LOG.setLogLevel(logLevel);
-
+        Log.i("CordovaActivity", "OnCreate WSTORM");
         LOG.i(TAG, "Apache Cordova native platform version " + CordovaWebView.CORDOVA_VERSION + " is starting");
         LOG.d(TAG, "CordovaActivity.onCreate()");
 
@@ -143,7 +143,7 @@ public class CordovaActivity extends Activity {
             cordovaInterface.restoreInstanceState(savedInstanceState);
         }
 
-        Log.i("CordovaActivity", "OnCreate WSTORM");
+        Log.i("CordovaActivity", "OnCreate WSTORM2");
 
     }
 
