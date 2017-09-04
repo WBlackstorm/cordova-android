@@ -34,6 +34,8 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -140,11 +142,17 @@ public class CordovaActivity extends Activity {
         if (savedInstanceState != null) {
             cordovaInterface.restoreInstanceState(savedInstanceState);
         }
+
+        Log.i("CordovaActivity", "OnCreate WSTORM");
+
     }
 
     protected void init() {
         appView = makeWebView();
+        appView.getView().setOnCreateContextMenuListener(null);
+        appView.getView().setLongClickable(false);
 
+        Log.i("CordovaActivity", "unregister WSTORM");
         unregisterForContextMenu(appView.getView());
 
         createViews();
@@ -451,6 +459,19 @@ public class CordovaActivity extends Activity {
             appView.getPluginManager().postMessage("onOptionsItemSelected", item);
         }
         return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        Log.i("CordovaActivity", "Here");
+
+        for (int i = 0; i < menu.size(); i++) {
+            menu.removeItem(i);
+        }
+
     }
 
     /**
