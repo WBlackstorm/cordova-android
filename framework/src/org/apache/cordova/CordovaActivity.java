@@ -35,6 +35,7 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -149,11 +150,6 @@ public class CordovaActivity extends Activity {
 
     protected void init() {
         appView = makeWebView();
-        appView.getView().setOnCreateContextMenuListener(null);
-        appView.getView().setLongClickable(false);
-
-        Log.i("CordovaActivity", "unregister WSTORM");
-        unregisterForContextMenu(appView.getView());
 
         createViews();
         if (!appView.isInitialized()) {
@@ -202,6 +198,14 @@ public class CordovaActivity extends Activity {
         }
 
         appView.getView().requestFocusFromTouch();
+    }
+
+    @Override
+    public void onActionModeStarted(ActionMode mode) {
+        super.onActionModeStarted(mode);
+        mode.getMenu().clear();
+        mode.getMenu().close();
+        Log.i("CordovaActivity", "ACTION MODE STARTED");
     }
 
     /**
