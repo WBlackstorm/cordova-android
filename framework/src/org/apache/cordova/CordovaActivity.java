@@ -39,6 +39,7 @@ import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -101,6 +102,8 @@ public class CordovaActivity extends Activity {
     protected ArrayList<PluginEntry> pluginEntries;
     protected CordovaInterfaceImpl cordovaInterface;
 
+    protected ActionMode actionMode;
+
     /**
      * Called when the activity is first created.
      */
@@ -162,6 +165,26 @@ public class CordovaActivity extends Activity {
         if ("media".equals(volumePref.toLowerCase(Locale.ENGLISH))) {
             setVolumeControlStream(AudioManager.STREAM_MUSIC);
         }
+
+        appView.getView().setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                Log.i("CordovaActivity", "Long");
+
+                if (actionMode != null) {
+
+                    actionMode.finish();
+
+                    Log.i("CordovaActivity", "Long2");
+
+                }
+
+                return false;
+
+            }
+        });
+
     }
 
     @SuppressWarnings("deprecation")
@@ -206,6 +229,15 @@ public class CordovaActivity extends Activity {
         mode.getMenu().clear();
         mode.getMenu().close();
         Log.i("CordovaActivity", "ACTION MODE STARTED");
+        actionMode = mode;
+    }
+
+    @Override
+    public void onActionModeFinished(ActionMode mode) {
+        super.onActionModeFinished(mode);
+        mode.getMenu().clear();
+        mode.getMenu().close();
+        Log.i("CordovaActivity", "ACTION MODE Stopped");
     }
 
     /**
